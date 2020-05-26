@@ -1,10 +1,10 @@
 import React from "react";
 //import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-//import Lang from './Lang.js';
+import Lang from './Lang.json';
 
 export default class Form extends React.Component {
-  state = {
+  state = { 
     Title: "",
     TitleError:"",
     Description: "",
@@ -14,9 +14,12 @@ export default class Form extends React.Component {
     Date_modified: "",
     Date_modifiedError: "",
     Keyword: "",
+    KeywordError:"",
     Keyword_uncontrolled: "",
+    KeywordUncontrolledError:"",
     Url: "",
-    UrlError:""
+    UrlError:"",
+    lang: Lang
   };
 
   change = e => {
@@ -33,10 +36,19 @@ export default class Form extends React.Component {
     let Date_issuedError="";
     let Date_modifiedError="";
     let UrlError="";
-    
+    let KeywordError="";
+    let KeywordUncontrolledError="";
 
+    if(!this.state.Keyword){
+      KeywordError="none";
+    }
+
+    if(!this.state.Keyword_uncontrolled){
+      KeywordUncontrolledError="none";
+    }
+   
     if(this.state.Url){
-      UrlError="test";
+      UrlError=`<link rel=&#34;canonical&#34; href=&#34;${this.state.Url}/>`;
     }
   
     if (!this.state.Title){
@@ -57,9 +69,9 @@ export default class Form extends React.Component {
 
    
 
-    if (TitleError || DescriptionError || Date_issuedError || Date_modifiedError||UrlError)
+    if ((((TitleError || DescriptionError) || (Date_issuedError || Date_modifiedError))||(UrlError||KeywordError))||KeywordUncontrolledError)
     {
-      this.setState({TitleError, DescriptionError, Date_issuedError,Date_modifiedError,UrlError});
+      this.setState({TitleError, DescriptionError, Date_issuedError,Date_modifiedError,UrlError,KeywordError,KeywordUncontrolledError});
       return false;
     }
     
@@ -87,7 +99,9 @@ export default class Form extends React.Component {
                 //Date_modified: "",
                 Date_modifiedError: "",
                 Keyword: "",
+                KeywordError:"",
                 Keyword_uncontrolled: "",
+                KeywordUncontrolledError:"",
                 Url: "",
                 UrlError:""
         });
@@ -117,7 +131,9 @@ export default class Form extends React.Component {
             Date_modified: "",
             Date_modifiedError: "",
             Keyword: "",
+            KeywordError:"",
             Keyword_uncontrolled: "",
+            KeywordUncontrolledError:"",
             Url: "",
             UrlError:""
       });
@@ -237,27 +253,15 @@ export default class Form extends React.Component {
           <br />
           <br />&lt;title&gt;{this.state.Title}&lt;&#47;title&gt;
           <br /> &lt;meta name=&quot;description&quot; content=&quot;{this.state.Description}&quot;&#47;&gt;
-          <br /> &lt;meta name=&quot;keywords&quot; content=&quot;{this.state.Keyword_uncontrolled}&quot;&#47;&gt;
+          <br /> &lt;meta name=&quot;keywords&quot; content=&quot;{this.state.Keyword_uncontrolled}{this.state.KeywordUncontrolledError}&quot;&#47;&gt;
           <br /> &lt;meta name="dcterms.creator" content="Gouvernement du Canada, Statistique Canada" />
           <br /> &lt;meta name="dcterms.title" content="{this.state.Title}" />
           <br /> &lt;meta name="dcterms.issued" title="W3CDTF" content="{this.state.Date_issued}" />
           <br /> &lt;meta name="dcterms.issued" title="W3CDTF" content="{this.state.Date_modified}" />
-          <br /> &lt;meta name="dcterms.subject" title="gcstc" content="{this.state.Keyword}" />
+          <br /> &lt;meta name="dcterms.subject" title="gcstc" content="{this.state.Keyword}{this.state.KeywordError}" />
           <br /> &lt;meta name="dcterms.language" title="ISO639-2" content="eng" />
           <br /> &lt;meta content="width=device-width,initial-scale=1" name="viewport" />
           <br /> {this.state.UrlError}
-          {/*<div className ="Urlcondition">
-            {
-              (()=>{
-                if (!this.state.UrlError){
-                return <span><br />True {this.state.Url} </span>}
-                else{
-                  return <span><br /> False{this.state.Url}</span>
-                }
-              })()
-            }
-          </div>
-          <br /> &lt;link rel="canonical" href=" {this.state.Url}" />*/}
           <br /> 
           <br /> &lt;meta property="dcterms:service" content="StatCan"/>
           <br /> &lt;meta property="dcterms:accessRights" content="2"/>
