@@ -24,15 +24,10 @@ class App extends Component {
       
       <div className="App">
         <Form onChange={fields => this.onChange(fields)} />
-        <div>
-      {/*<Button variant="contained" color="primary">
-      Submit
-    </Button>*/}
-     </div>
+        {/*
         <p>
-
           {JSON.stringify(this.state.fields, null, 2)}
-        </p>
+        </p>*/}
       </div>
     );
   }

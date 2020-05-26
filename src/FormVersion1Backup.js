@@ -1,7 +1,7 @@
 import React from "react";
 //import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-//import Lang from './Lang.js';
+
 
 export default class Form extends React.Component {
   state = {
@@ -15,8 +15,7 @@ export default class Form extends React.Component {
     Date_modifiedError: "",
     Keyword: "",
     Keyword_uncontrolled: "",
-    Url: "",
-    UrlError:""
+    Url: ""
   };
 
   change = e => {
@@ -26,18 +25,11 @@ export default class Form extends React.Component {
     });
   };
 
-  // Validation for mandatory fields.
   validate = () => {
     let TitleError="";
     let DescriptionError="";
     let Date_issuedError="";
     let Date_modifiedError="";
-    let UrlError="";
-    
-
-    if(this.state.Url){
-      UrlError="test";
-    }
   
     if (!this.state.Title){
       TitleError = "Title cannot be blank";
@@ -55,21 +47,19 @@ export default class Form extends React.Component {
       Date_modifiedError = "Date modified cannot be blank";
     }
 
-   
-
-    if (TitleError || DescriptionError || Date_issuedError || Date_modifiedError||UrlError)
+    if (TitleError || DescriptionError)
     {
-      this.setState({TitleError, DescriptionError, Date_issuedError,Date_modifiedError,UrlError});
+      if(Date_issuedError || Date_modifiedError)
+      {
+        this.setState({TitleError, DescriptionError, Date_issuedError,Date_modifiedError});
+        
+      }
       return false;
     }
     
-    
     return true;
   };
-  
 
-
-  //Perfomring submit operation
   onSubmit = e => {
         e.preventDefault();
         // this.props.onSubmit(this.state);
@@ -78,20 +68,19 @@ export default class Form extends React.Component {
         if (err){
             //clear form
             this.setState({
-                //Title: "",
+                Title: "",
                 TitleError:"",
-                //Description: "",
+                Description: "",
                 DescriptionError:"",
-                //Date_issued: "",
+                Date_issued: "",
                 Date_issuedError: "",
-                //Date_modified: "",
+                Date_modified: "",
                 Date_modifiedError: "",
                 Keyword: "",
                 Keyword_uncontrolled: "",
-                Url: "",
-                UrlError:""
+                Url: ""
         });
-           {/* this.props.onChange({
+            this.props.onChange({
                 Title: "",
                 Description: "",
                 Date_issued: "",
@@ -99,31 +88,9 @@ export default class Form extends React.Component {
                 Keyword: "",
                 Keyword_uncontrolled: "",
                 Url: ""  
-        });*/}
+        });
     }    
   };
-
-
-  //Performing clear operation
-  handleAlternate(event) {
-    event.preventDefault();
-          this.setState({
-            Title: "",
-            TitleError:"",
-            Description: "",
-            DescriptionError:"",
-            Date_issued: "",
-            Date_issuedError: "",
-            Date_modified: "",
-            Date_modifiedError: "",
-            Keyword: "",
-            Keyword_uncontrolled: "",
-            Url: "",
-            UrlError:""
-      });
-  }
-
-
 
   render() {
     return (
@@ -221,8 +188,7 @@ export default class Form extends React.Component {
         />
         <br />
         <br />
-        <Button variant="contained" color="primary" component="span" onClick={e => this.onSubmit(e)}>Submit</Button> &nbsp;
-        <Button variant="contained" color="primary" component="span" onClick={this.handleAlternate.bind(this)}>Clear </Button>
+        <Button variant="contained" color="primary" component="span" onClick={e => this.onSubmit(e)}>Submit</Button>
 
         
         <div>
@@ -245,19 +211,7 @@ export default class Form extends React.Component {
           <br /> &lt;meta name="dcterms.subject" title="gcstc" content="{this.state.Keyword}" />
           <br /> &lt;meta name="dcterms.language" title="ISO639-2" content="eng" />
           <br /> &lt;meta content="width=device-width,initial-scale=1" name="viewport" />
-          <br /> {this.state.UrlError}
-          {/*<div className ="Urlcondition">
-            {
-              (()=>{
-                if (!this.state.UrlError){
-                return <span><br />True {this.state.Url} </span>}
-                else{
-                  return <span><br /> False{this.state.Url}</span>
-                }
-              })()
-            }
-          </div>
-          <br /> &lt;link rel="canonical" href=" {this.state.Url}" />*/}
+          <br /> &lt;link rel="canonical" href=" {this.state.Url}" />
           <br /> 
           <br /> &lt;meta property="dcterms:service" content="StatCan"/>
           <br /> &lt;meta property="dcterms:accessRights" content="2"/>

@@ -45,6 +45,14 @@ h3 {
   color: rgb(3, 3, 3);
 }
 
+h2 { 
+  background-color: #fff;
+  margin-left: 0px;
+  height: 0px;
+  padding: 0px;
+  color: rgba(0, 0, 0, 0.541);
+}
+
 input {
   width: 100%;
   padding: 12px 20px;
