@@ -40,11 +40,11 @@ export default class Form extends React.Component {
     let KeywordUncontrolledError="";
 
     if(!this.state.Keyword){
-      KeywordError="none";
+      KeywordError="nul";
     }
 
     if(!this.state.Keyword_uncontrolled){
-      KeywordUncontrolledError="none";
+      KeywordUncontrolledError="nul";
     }
    
     if(this.state.Url){
@@ -144,7 +144,7 @@ export default class Form extends React.Component {
   render() {
     return (
       <form>
-        <h1>Meta tag generator</h1>
+        {/*<h1>Meta tag generator</h1>
         <hr></hr>
         <h2>Required fields are marked with an asterisk (*)</h2><br />
         <div>
@@ -152,7 +152,8 @@ export default class Form extends React.Component {
         <div onChange={this.myChangeHandler}>
           <input type="radio" value={this.state.English} name="Language"/> English
           <input type="radio" value={this.state.French} name="Language"/> French
-          </div> 
+        </div>*/}
+        <div> 
          <h3>Title:*</h3>
         </div>
         <input
@@ -259,7 +260,7 @@ export default class Form extends React.Component {
           <br /> &lt;meta name="dcterms.issued" title="W3CDTF" content="{this.state.Date_issued}" />
           <br /> &lt;meta name="dcterms.issued" title="W3CDTF" content="{this.state.Date_modified}" />
           <br /> &lt;meta name="dcterms.subject" title="gcstc" content="{this.state.Keyword}{this.state.KeywordError}" />
-          <br /> &lt;meta name="dcterms.language" title="ISO639-2" content="eng" />
+          <br /> &lt;meta name="dcterms.language" title="ISO639-2" content="fra" />
           <br /> &lt;meta content="width=device-width,initial-scale=1" name="viewport" />
           <br /> {this.state.UrlError}
           <br /> 

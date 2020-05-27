@@ -1,10 +1,15 @@
 import React from "react";
 //import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import Lang from './Lang.json';
+import LangEn from './LangEn.json';
+import LangFr from './LangFr.json';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormControl from '@material-ui/core/FormControl';
 
 export default class Form extends React.Component {
-  state = { 
+    state = { 
     Title: "",
     TitleError:"",
     Description: "",
@@ -19,8 +24,11 @@ export default class Form extends React.Component {
     KeywordUncontrolledError:"",
     Url: "",
     UrlError:"",
-    lang: Lang
-  };
+    langEn: LangEn,
+    langFr: LangFr, 
+    Language:"",
+    LanguageError:""
+    };
 
   change = e => {
     this.props.onChange({ [e.target.name]: e.target.value });
@@ -38,17 +46,28 @@ export default class Form extends React.Component {
     let UrlError="";
     let KeywordError="";
     let KeywordUncontrolledError="";
+    let LanguageError="";
 
-    if(!this.state.Keyword){
-      KeywordError="none";
+    if(!this.state.Language){
+      LanguageError="Language Cannot be Empty";
     }
 
-    if(!this.state.Keyword_uncontrolled){
-      KeywordUncontrolledError="none";
+    if((!this.state.Keyword)&&(this.state.language==="english")){
+      KeywordError=(this.state.langEn.none);
+    }
+    if((!this.state.Keyword)&&(this.state.language==="rench")){
+      KeywordError=(this.state.langFr.none);
+    }
+
+    if((!this.state.Keyword_uncontrolled)&&(this.state.language==="english")){
+      KeywordUncontrolledError=(this.state.langEn.none);
+    }
+    else{
+      KeywordUncontrolledError=(this.state.langFr.none);
     }
    
     if(this.state.Url){
-      UrlError=`<link rel=&#34;canonical&#34; href=&#34;${this.state.Url}/>`;
+      UrlError=`<link rel="canonical" href="${this.state.Url}"/>`;
     }
   
     if (!this.state.Title){
@@ -69,7 +88,7 @@ export default class Form extends React.Component {
 
    
 
-    if ((((TitleError || DescriptionError) || (Date_issuedError || Date_modifiedError))||(UrlError||KeywordError))||KeywordUncontrolledError)
+    if ((((TitleError || DescriptionError) || (Date_issuedError || Date_modifiedError))||(UrlError||KeywordError))||(KeywordUncontrolledError||LanguageError))
     {
       this.setState({TitleError, DescriptionError, Date_issuedError,Date_modifiedError,UrlError,KeywordError,KeywordUncontrolledError});
       return false;
@@ -103,7 +122,9 @@ export default class Form extends React.Component {
                 Keyword_uncontrolled: "",
                 KeywordUncontrolledError:"",
                 Url: "",
-                UrlError:""
+                UrlError:"",
+                Language:"",
+                LanguageError:""
         });
            {/* this.props.onChange({
                 Title: "",
@@ -117,6 +138,7 @@ export default class Form extends React.Component {
     }    
   };
 
+  
 
   //Performing clear operation
   handleAlternate(event) {
@@ -135,7 +157,9 @@ export default class Form extends React.Component {
             Keyword_uncontrolled: "",
             KeywordUncontrolledError:"",
             Url: "",
-            UrlError:""
+            UrlError:"",
+            Language:"",
+            LanguageError:""
       });
   }
 
@@ -148,12 +172,17 @@ export default class Form extends React.Component {
         <hr></hr>
         <h2>Required fields are marked with an asterisk (*)</h2><br />
         <div>
-        <h3>Language:*</h3>
-        <div onChange={this.myChangeHandler}>
-          <input type="radio" value={this.state.English} name="Language"/> English
-          <input type="radio" value={this.state.French} name="Language"/> French
-          </div> 
-         <h3>Title:*</h3>
+        <h3>Language:*</h3></div>
+        <FormControl component="fieldset">
+        <RadioGroup aria-label="language" name="Language" value={this.state.Language} onChange={e => this.change(e)}>
+        <FormControlLabel value="english" control={<Radio />} label="English" />
+        <FormControlLabel value="french" control={<Radio />} label="French" />
+        </RadioGroup>
+        </FormControl>
+        <div style={{ fontSize: 12, color: "red" }}>
+            {this.state.LanguageError}
+        </div>
+        <div><h3>Title:*</h3>
         </div>
         <input
           name="Title"
@@ -244,6 +273,7 @@ export default class Form extends React.Component {
         <div>
          <h3>Generated Code</h3>
         </div>
+         <br />{this.state.language}
          <br />&lt;head>
          <br />&lt;meta charset="utf-8">
          <br />&lt;!-- Web Experience Toolkit (WET) / Boîte à outils de l'expérience Web (BOEW)
