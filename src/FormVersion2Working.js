@@ -27,7 +27,9 @@ export default class Form extends React.Component {
     langEn: LangEn,
     langFr: LangFr, 
     Language:"",
-    LanguageError:""
+    LanguageError:"",
+    LangShort:"",
+    Creator:""
     };
 
   change = e => {
@@ -47,7 +49,20 @@ export default class Form extends React.Component {
     let KeywordError="";
     let KeywordUncontrolledError="";
     let LanguageError="";
+    let LangShort="";
+    let Creator="";
 
+    if(this.state.Language==="english"){
+      LangShort=(this.state.langEn.eng);
+      Creator=(this.state.langEn.StatsCan);
+    }
+
+    if(this.state.Language==="french"){
+      LangShort=(this.state.langFr.fra);
+      Creator=(this.state.langFr.StatsCan);
+    }
+
+    
     console.log(this.state.Language);
     if(!this.state.Language){
       LanguageError="Language Cannot be Empty";
@@ -56,6 +71,7 @@ export default class Form extends React.Component {
     if((!this.state.Keyword)&&(this.state.Language==="english")){
       KeywordError=(this.state.langEn.none);
     }
+
     if((!this.state.Keyword)&&(this.state.Language==="french")){
       KeywordError=(this.state.langFr.none);
     }
@@ -89,9 +105,9 @@ export default class Form extends React.Component {
 
    
 
-    if ((((TitleError || DescriptionError) || (Date_issuedError || Date_modifiedError))||(UrlError||KeywordError))||(KeywordUncontrolledError||LanguageError))
+    if (((((TitleError || DescriptionError) || (Date_issuedError || Date_modifiedError))||(UrlError||KeywordError))||(KeywordUncontrolledError||LanguageError))||(LangShort||Creator))
     {
-      this.setState({TitleError, DescriptionError, Date_issuedError,Date_modifiedError,UrlError,KeywordError,KeywordUncontrolledError,LanguageError});
+      this.setState({TitleError, DescriptionError, Date_issuedError,Date_modifiedError,UrlError,KeywordError,KeywordUncontrolledError,LanguageError,LangShort,Creator});
       return false;
     }
     
@@ -125,7 +141,9 @@ export default class Form extends React.Component {
                 Url: "",
                 UrlError:"",
                 Language:"",
-                LanguageError:""
+                LanguageError:"",
+                LangShort:"",
+                Creator:""
         });
            {/* this.props.onChange({
                 Title: "",
@@ -160,7 +178,9 @@ export default class Form extends React.Component {
             Url: "",
             UrlError:"",
             Language:"",
-            LanguageError:""
+            LanguageError:"",
+            LangShort:"",
+            Creator:""
       });
   }
 
@@ -285,12 +305,12 @@ export default class Form extends React.Component {
           <br />&lt;title&gt;{this.state.Title}&lt;&#47;title&gt;
           <br /> &lt;meta name=&quot;description&quot; content=&quot;{this.state.Description}&quot;&#47;&gt;
           <br /> &lt;meta name=&quot;keywords&quot; content=&quot;{this.state.Keyword_uncontrolled}{this.state.KeywordUncontrolledError}&quot;&#47;&gt;
-          <br /> &lt;meta name="dcterms.creator" content="Gouvernement du Canada, Statistique Canada" />
+          <br /> &lt;meta name="dcterms.creator" content="{this.state.Creator}" />
           <br /> &lt;meta name="dcterms.title" content="{this.state.Title}" />
           <br /> &lt;meta name="dcterms.issued" title="W3CDTF" content="{this.state.Date_issued}" />
           <br /> &lt;meta name="dcterms.issued" title="W3CDTF" content="{this.state.Date_modified}" />
           <br /> &lt;meta name="dcterms.subject" title="gcstc" content="{this.state.Keyword}{this.state.KeywordError}" />
-          <br /> &lt;meta name="dcterms.language" title="ISO639-2" content="eng" />
+          <br /> &lt;meta name="dcterms.language" title="ISO639-2" content="{this.state.LangShort}" />
           <br /> &lt;meta content="width=device-width,initial-scale=1" name="viewport" />
           <br /> {this.state.UrlError}
           <br /> 
