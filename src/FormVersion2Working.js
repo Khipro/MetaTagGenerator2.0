@@ -48,21 +48,22 @@ export default class Form extends React.Component {
     let KeywordUncontrolledError="";
     let LanguageError="";
 
+    console.log(this.state.Language);
     if(!this.state.Language){
       LanguageError="Language Cannot be Empty";
     }
 
-    if((!this.state.Keyword)&&(this.state.language==="english")){
+    if((!this.state.Keyword)&&(this.state.Language==="english")){
       KeywordError=(this.state.langEn.none);
     }
-    if((!this.state.Keyword)&&(this.state.language==="rench")){
+    if((!this.state.Keyword)&&(this.state.Language==="french")){
       KeywordError=(this.state.langFr.none);
     }
 
-    if((!this.state.Keyword_uncontrolled)&&(this.state.language==="english")){
+    if((!this.state.Keyword_uncontrolled)&&(this.state.Language==="english")){
       KeywordUncontrolledError=(this.state.langEn.none);
     }
-    else{
+    if((!this.state.Keyword_uncontrolled)&&(this.state.Language==="french")){
       KeywordUncontrolledError=(this.state.langFr.none);
     }
    
@@ -90,7 +91,7 @@ export default class Form extends React.Component {
 
     if ((((TitleError || DescriptionError) || (Date_issuedError || Date_modifiedError))||(UrlError||KeywordError))||(KeywordUncontrolledError||LanguageError))
     {
-      this.setState({TitleError, DescriptionError, Date_issuedError,Date_modifiedError,UrlError,KeywordError,KeywordUncontrolledError});
+      this.setState({TitleError, DescriptionError, Date_issuedError,Date_modifiedError,UrlError,KeywordError,KeywordUncontrolledError,LanguageError});
       return false;
     }
     
