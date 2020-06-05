@@ -7,6 +7,7 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
+//import theme from "./Khipro Documents/MEBT/2nd Coop/GCWeb-7.0.1";
 
 export default class Form extends React.Component {
     state = { 
@@ -54,12 +55,12 @@ export default class Form extends React.Component {
 
     if(this.state.Language==="english"){
       LangShort=(this.state.langEn.eng);
-      Creator=(this.state.langEn.StatsCan);
+      Creator=(this.state.langEn.statsCan);
     }
 
     if(this.state.Language==="french"){
       LangShort=(this.state.langFr.fra);
-      Creator=(this.state.langFr.StatsCan);
+      Creator=(this.state.langFr.statsCan);
     }
 
     
@@ -184,6 +185,12 @@ export default class Form extends React.Component {
       });
   }
 
+  handleKeyDown(e) {
+    e.target.style.height = 'inherit';
+    e.target.style.height = `${e.target.scrollHeight}px`; 
+    // In case you have a limitation
+    // e.target.style.height = `${Math.min(e.target.scrollHeight, limit)}px`;
+  }
 
 
   render() {
@@ -218,12 +225,14 @@ export default class Form extends React.Component {
         <div>
          <h3>Description:*</h3>
         </div>
-        <input
+        <textarea 
+          onKeyDown={this.handleKeyDown}
           name="Description"
           placeholder="Description"
           value={this.state.Description}
           onChange={e => this.change(e)}
         />
+        <div class="grippie"></div>
         <div style={{ fontSize: 12, color: "red" }}>
             {this.state.DescriptionError}
         </div>
@@ -259,7 +268,8 @@ export default class Form extends React.Component {
         <div>
          <h3>Keyword (Controlled)</h3>
         </div>
-        <input
+        <textarea 
+          onKeyDown={this.handleKeyDown}
           name="Keyword"
           placeholder="Keyword (Controlled)"
           value={this.state.Keyword}
@@ -269,7 +279,8 @@ export default class Form extends React.Component {
         <div>
          <h3>Keyword (Uncontrolled):</h3>
         </div>
-        <input
+        <textarea 
+          onKeyDown={this.handleKeyDown}
           name="Keyword_uncontrolled"
           placeholder="Keyword (Uncontrolled)"
           value={this.state.Keyword_uncontrolled}

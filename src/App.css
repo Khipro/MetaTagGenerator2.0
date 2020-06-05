@@ -106,3 +106,21 @@ input[type="radio"] {
   margin-top: 1px;
   vertical-align: top;
 }
+
+#grippie{
+  background-color: #eee;
+  border: 1px solid #ddd;
+  border-top-width: 0;
+  cursor: s-resize;
+  height: 9px;
+  overflow: hidden;
+  cursor: s-resize;
+}
+
+textarea {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  font-family: Arial;
+}

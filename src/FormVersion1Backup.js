@@ -1,10 +1,16 @@
 import React from "react";
 //import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import Lang from './Lang.json';
+import LangEn from './LangEn.json';
+import LangFr from './LangFr.json';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormControl from '@material-ui/core/FormControl';
+//import theme from "./Khipro Documents/MEBT/2nd Coop/GCWeb-7.0.1";
 
 export default class Form extends React.Component {
-  state = { 
+    state = { 
     Title: "",
     TitleError:"",
     Description: "",
@@ -19,8 +25,13 @@ export default class Form extends React.Component {
     KeywordUncontrolledError:"",
     Url: "",
     UrlError:"",
-    lang: Lang
-  };
+    langEn: LangEn,
+    langFr: LangFr, 
+    Language:"",
+    LanguageError:"",
+    LangShort:"",
+    Creator:""
+    };
 
   change = e => {
     this.props.onChange({ [e.target.name]: e.target.value });
@@ -38,13 +49,39 @@ export default class Form extends React.Component {
     let UrlError="";
     let KeywordError="";
     let KeywordUncontrolledError="";
+    let LanguageError="";
+    let LangShort="";
+    let Creator="";
 
-    if(!this.state.Keyword){
-      KeywordError="none";
+    if(this.state.Language==="english"){
+      LangShort=(this.state.langEn.eng);
+      Creator=(this.state.langEn.StatsCan);
     }
 
-    if(!this.state.Keyword_uncontrolled){
-      KeywordUncontrolledError="none";
+    if(this.state.Language==="french"){
+      LangShort=(this.state.langFr.fra);
+      Creator=(this.state.langFr.StatsCan);
+    }
+
+    
+    console.log(this.state.Language);
+    if(!this.state.Language){
+      LanguageError="Language Cannot be Empty";
+    }
+
+    if((!this.state.Keyword)&&(this.state.Language==="english")){
+      KeywordError=(this.state.langEn.none);
+    }
+
+    if((!this.state.Keyword)&&(this.state.Language==="french")){
+      KeywordError=(this.state.langFr.none);
+    }
+
+    if((!this.state.Keyword_uncontrolled)&&(this.state.Language==="english")){
+      KeywordUncontrolledError=(this.state.langEn.none);
+    }
+    if((!this.state.Keyword_uncontrolled)&&(this.state.Language==="french")){
+      KeywordUncontrolledError=(this.state.langFr.none);
     }
    
     if(this.state.Url){
@@ -69,9 +106,9 @@ export default class Form extends React.Component {
 
    
 
-    if ((((TitleError || DescriptionError) || (Date_issuedError || Date_modifiedError))||(UrlError||KeywordError))||KeywordUncontrolledError)
+    if (((((TitleError || DescriptionError) || (Date_issuedError || Date_modifiedError))||(UrlError||KeywordError))||(KeywordUncontrolledError||LanguageError))||(LangShort||Creator))
     {
-      this.setState({TitleError, DescriptionError, Date_issuedError,Date_modifiedError,UrlError,KeywordError,KeywordUncontrolledError});
+      this.setState({TitleError, DescriptionError, Date_issuedError,Date_modifiedError,UrlError,KeywordError,KeywordUncontrolledError,LanguageError,LangShort,Creator});
       return false;
     }
     
@@ -103,7 +140,11 @@ export default class Form extends React.Component {
                 Keyword_uncontrolled: "",
                 KeywordUncontrolledError:"",
                 Url: "",
-                UrlError:""
+                UrlError:"",
+                Language:"",
+                LanguageError:"",
+                LangShort:"",
+                Creator:""
         });
            {/* this.props.onChange({
                 Title: "",
@@ -117,6 +158,7 @@ export default class Form extends React.Component {
     }    
   };
 
+  
 
   //Performing clear operation
   handleAlternate(event) {
@@ -135,10 +177,20 @@ export default class Form extends React.Component {
             Keyword_uncontrolled: "",
             KeywordUncontrolledError:"",
             Url: "",
-            UrlError:""
+            UrlError:"",
+            Language:"",
+            LanguageError:"",
+            LangShort:"",
+            Creator:""
       });
   }
 
+  handleKeyDown(e) {
+    e.target.style.height = 'inherit';
+    e.target.style.height = `${e.target.scrollHeight}px`; 
+    // In case you have a limitation
+    // e.target.style.height = `${Math.min(e.target.scrollHeight, limit)}px`;
+  }
 
 
   render() {
@@ -148,12 +200,17 @@ export default class Form extends React.Component {
         <hr></hr>
         <h2>Required fields are marked with an asterisk (*)</h2><br />
         <div>
-        <h3>Language:*</h3>
-        <div onChange={this.myChangeHandler}>
-          <input type="radio" value={this.state.English} name="Language"/> English
-          <input type="radio" value={this.state.French} name="Language"/> French
-          </div> 
-         <h3>Title:*</h3>
+        <h3>Language:*</h3></div>
+        <FormControl component="fieldset">
+        <RadioGroup aria-label="language" name="Language" value={this.state.Language} onChange={e => this.change(e)}>
+        <FormControlLabel value="english" control={<Radio />} label="English" />
+        <FormControlLabel value="french" control={<Radio />} label="French" />
+        </RadioGroup>
+        </FormControl>
+        <div style={{ fontSize: 12, color: "red" }}>
+            {this.state.LanguageError}
+        </div>
+        <div><h3>Title:*</h3>
         </div>
         <input
           name="Title"
@@ -168,12 +225,14 @@ export default class Form extends React.Component {
         <div>
          <h3>Description:*</h3>
         </div>
-        <input
+        <textarea 
+          onKeyDown={this.handleKeyDown}
           name="Description"
           placeholder="Description"
           value={this.state.Description}
           onChange={e => this.change(e)}
         />
+        <div class="grippie"></div>
         <div style={{ fontSize: 12, color: "red" }}>
             {this.state.DescriptionError}
         </div>
@@ -209,7 +268,8 @@ export default class Form extends React.Component {
         <div>
          <h3>Keyword (Controlled)</h3>
         </div>
-        <input
+        <textarea 
+          onKeyDown={this.handleKeyDown}
           name="Keyword"
           placeholder="Keyword (Controlled)"
           value={this.state.Keyword}
@@ -219,7 +279,8 @@ export default class Form extends React.Component {
         <div>
          <h3>Keyword (Uncontrolled):</h3>
         </div>
-        <input
+        <textarea 
+          onKeyDown={this.handleKeyDown}
           name="Keyword_uncontrolled"
           placeholder="Keyword (Uncontrolled)"
           value={this.state.Keyword_uncontrolled}
@@ -244,6 +305,7 @@ export default class Form extends React.Component {
         <div>
          <h3>Generated Code</h3>
         </div>
+         <br />{this.state.language}
          <br />&lt;head>
          <br />&lt;meta charset="utf-8">
          <br />&lt;!-- Web Experience Toolkit (WET) / Boîte à outils de l'expérience Web (BOEW)
@@ -254,12 +316,12 @@ export default class Form extends React.Component {
           <br />&lt;title&gt;{this.state.Title}&lt;&#47;title&gt;
           <br /> &lt;meta name=&quot;description&quot; content=&quot;{this.state.Description}&quot;&#47;&gt;
           <br /> &lt;meta name=&quot;keywords&quot; content=&quot;{this.state.Keyword_uncontrolled}{this.state.KeywordUncontrolledError}&quot;&#47;&gt;
-          <br /> &lt;meta name="dcterms.creator" content="Gouvernement du Canada, Statistique Canada" />
+          <br /> &lt;meta name="dcterms.creator" content="{this.state.Creator}" />
           <br /> &lt;meta name="dcterms.title" content="{this.state.Title}" />
           <br /> &lt;meta name="dcterms.issued" title="W3CDTF" content="{this.state.Date_issued}" />
           <br /> &lt;meta name="dcterms.issued" title="W3CDTF" content="{this.state.Date_modified}" />
           <br /> &lt;meta name="dcterms.subject" title="gcstc" content="{this.state.Keyword}{this.state.KeywordError}" />
-          <br /> &lt;meta name="dcterms.language" title="ISO639-2" content="eng" />
+          <br /> &lt;meta name="dcterms.language" title="ISO639-2" content="{this.state.LangShort}" />
           <br /> &lt;meta content="width=device-width,initial-scale=1" name="viewport" />
           <br /> {this.state.UrlError}
           <br /> 

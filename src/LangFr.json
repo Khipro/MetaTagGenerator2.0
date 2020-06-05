@@ -1,9 +1,9 @@
 {
    
-    "UrlPrefix":"<link rel=&#34;canonical&#34; href=&#34;",
-    "UrlPostfix":"/>",
+    "urlPrefix":"<link rel=&#34;canonical&#34; href=&#34;",
+    "urlPostfix":"/>",
     "none":"nul",
     "fra":"fra",
-    "StatsCan":"Gouvernement du Canada, Statistique Canada"
+    "statsCan":"Gouvernement du Canada, Statistique Canada"
     
 }
