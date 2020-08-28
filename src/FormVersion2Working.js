@@ -30,6 +30,7 @@ export default class Form extends React.Component {
     Language:"",
     LanguageError:"",
     LangShort:"",
+    LangShort2:"",
     Creator:""
     };
 
@@ -51,15 +52,18 @@ export default class Form extends React.Component {
     let KeywordUncontrolledError="";
     let LanguageError="";
     let LangShort="";
+    let LangShort2="";
     let Creator="";
 
     if(this.state.Language==="english"){
       LangShort=(this.state.langEn.eng);
+      LangShort2=(this.state.langEn.en);
       Creator=(this.state.langEn.statsCan);
     }
 
     if(this.state.Language==="french"){
       LangShort=(this.state.langFr.fra);
+      LangShort2=(this.state.langFr.fr);
       Creator=(this.state.langFr.statsCan);
     }
 
@@ -106,9 +110,9 @@ export default class Form extends React.Component {
 
    
 
-    if (((((TitleError || DescriptionError) || (Date_issuedError || Date_modifiedError))||(UrlError||KeywordError))||(KeywordUncontrolledError||LanguageError))||(LangShort||Creator))
+    if ((((((TitleError || DescriptionError) || (Date_issuedError || Date_modifiedError))||(UrlError||KeywordError))||(KeywordUncontrolledError||LanguageError))||(LangShort||Creator))||(LangShort2))
     {
-      this.setState({TitleError, DescriptionError, Date_issuedError,Date_modifiedError,UrlError,KeywordError,KeywordUncontrolledError,LanguageError,LangShort,Creator});
+      this.setState({TitleError, DescriptionError, Date_issuedError,Date_modifiedError,UrlError,KeywordError,KeywordUncontrolledError,LanguageError,LangShort,LangShort2,Creator});
       return false;
     }
     
@@ -144,6 +148,7 @@ export default class Form extends React.Component {
                 Language:"",
                 LanguageError:"",
                 LangShort:"",
+                LangShort2:"",
                 Creator:""
         });
            {/* this.props.onChange({
@@ -181,6 +186,7 @@ export default class Form extends React.Component {
             Language:"",
             LanguageError:"",
             LangShort:"",
+            LangShort2:"",
             Creator:""
       });
   }
@@ -203,8 +209,8 @@ export default class Form extends React.Component {
         <h3>Language:*</h3></div>
         <FormControl component="fieldset">
         <RadioGroup aria-label="language" name="Language" value={this.state.Language} onChange={e => this.change(e)}>
-        <FormControlLabel value="english" control={<Radio />} label="English" />
-        <FormControlLabel value="french" control={<Radio />} label="French" />
+        <FormControlLabel value="english" control={<Radio />} type="checkbox" defaultChecked label="English" />
+        <FormControlLabel value="french" control={<Radio />} type="checkbox" label="French" />
         </RadioGroup>
         </FormControl>
         <div style={{ fontSize: 12, color: "red" }}>
@@ -306,49 +312,55 @@ export default class Form extends React.Component {
          <h3>Generated Code</h3>
         </div>
          <br />{this.state.language}
-         <br />&lt;head>
-         <br />&lt;meta charset="utf-8">
+         <br />&lt;!DOCTYPE html&gt;
+         <br></br>
+         <br />&lt;!--[if lt IE 9]&gt;&lt;html class="no-js lt-ie9" lang="{this.state.LangShort2}" dir="ltr"&gt;&lt;![endif]--&gt;&lt;!--[if gt IE 8]&gt;&lt;!--&gt;&lt;/html&gt;
+         <br />&lt;html class="no-js" lang="{this.state.LangShort2}" dir="ltr" xmlns="http://www.w3.org/1999/xhtml"&gt;&lt;/html&gt;
+         <br></br> 
+         <br />&lt;!--&lt;![endif]--&gt;
+         <br />&lt;head&gt;
+         <br />&lt;meta charset="utf-8"&gt;
          <br />&lt;!-- Web Experience Toolkit (WET) / Boîte à outils de l'expérience Web (BOEW)
-              wet-boew.github.io/wet-boew/License-en.htm / wet-boew.github.io/wet-boew/Licence-fr.htm -->
-          <br />&lt;link rel="schema.dc" href="http://purl.org/dc/elements/1.1/" />
-          <br />&lt;link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
+              wet-boew.github.io/wet-boew/License-en.htm / wet-boew.github.io/wet-boew/Licence-fr.htm --&gt;
+          <br />&lt;link rel="schema.dc" href="http://purl.org/dc/elements/1.1/" /&gt;
+          <br />&lt;link rel="schema.dcterms" href="http://purl.org/dc/terms/" /&gt;
           <br />
           <br />&lt;title&gt;{this.state.Title}&lt;&#47;title&gt;
           <br /> &lt;meta name=&quot;description&quot; content=&quot;{this.state.Description}&quot;&#47;&gt;
           <br /> &lt;meta name=&quot;keywords&quot; content=&quot;{this.state.Keyword_uncontrolled}{this.state.KeywordUncontrolledError}&quot;&#47;&gt;
-          <br /> &lt;meta name="dcterms.creator" content="{this.state.Creator}" />
-          <br /> &lt;meta name="dcterms.title" content="{this.state.Title}" />
-          <br /> &lt;meta name="dcterms.issued" title="W3CDTF" content="{this.state.Date_issued}" />
-          <br /> &lt;meta name="dcterms.issued" title="W3CDTF" content="{this.state.Date_modified}" />
-          <br /> &lt;meta name="dcterms.subject" title="gcstc" content="{this.state.Keyword}{this.state.KeywordError}" />
-          <br /> &lt;meta name="dcterms.language" title="ISO639-2" content="{this.state.LangShort}" />
-          <br /> &lt;meta content="width=device-width,initial-scale=1" name="viewport" />
+          <br /> &lt;meta name="dcterms.creator" content="{this.state.Creator}" /&gt;
+          <br /> &lt;meta name="dcterms.title" content="{this.state.Title}" /&gt;
+          <br /> &lt;meta name="dcterms.issued" title="W3CDTF" content="{this.state.Date_issued}" /&gt;
+          <br /> &lt;meta name="dcterms.issued" title="W3CDTF" content="{this.state.Date_modified}" /&gt;
+          <br /> &lt;meta name="dcterms.subject" title="gcstc" content="{this.state.Keyword}{this.state.KeywordError}" /&gt;
+          <br /> &lt;meta name="dcterms.language" title="ISO639-2" content="{this.state.LangShort}" /&gt;
+          <br /> &lt;meta content="width=device-width,initial-scale=1" name="viewport" /&gt;
           <br /> {this.state.UrlError}
           <br /> 
-          <br /> &lt;meta property="dcterms:service" content="StatCan"/>
-          <br /> &lt;meta property="dcterms:accessRights" content="2"/>
+          <br /> &lt;meta property="dcterms:service" content="StatCan"/&gt;
+          <br /> &lt;meta property="dcterms:accessRights" content="2"/&gt;
           <br /> 
-          <br /> &lt;!--[if gte IE 9 | !IE ]>&lt;!-->
-          <br /> &lt;link href="/wet-boew4b/assets/favicon.ico" rel="icon" type="image/x-icon">
-          <br /> &lt;link rel="stylesheet" href="/wet-boew4b/css/wet-boew.min.css">
-          <br /> &lt;script src="/wet-boew4b/js/jquery.min.js"><br /> &gt;script>
-          <br /> &lt;!--&lt;![endif]-->
+          <br /> &lt;!--[if gte IE 9 | !IE ]&gt;&lt;!--&gt;
+          <br /> &lt;link href="/wet-boew4b/assets/favicon.ico" rel="icon" type="image/x-icon"&gt;
+          <br /> &lt;link rel="stylesheet" href="/wet-boew4b/css/wet-boew.min.css"&gt;
+          <br /> &lt;script src="/wet-boew4b/js/jquery.min.js"&gt;<br /> &gt;script&gt;
+          <br /> &lt;!--&lt;![endif]--&gt;
           <br />
-          <br /> &lt;link rel="stylesheet" href="/wet-boew4b/css/theme.min.css">
+          <br /> &lt;link rel="stylesheet" href="/wet-boew4b/css/theme.min.css"&gt;
           <br />
-          <br /> &lt;!--[if lt IE 9]>
-          <br /> &lt;link href="/wet-boew4b/assets/favicon.ico" rel="shortcut icon" />
-          <br /> &lt;link rel="stylesheet" href="/wet-boew4b/css/ie8-wet-boew.min.css" />
-          <br /> &lt;script src="/wet-boew4b/js/ie8-wet-boew.min.js">&lt;&#47;script>
-          <br /> &lt;![endif]-->
+          <br /> &lt;!--[if lt IE 9]&gt;
+          <br /> &lt;link href="/wet-boew4b/assets/favicon.ico" rel="shortcut icon" /&gt;
+          <br /> &lt;link rel="stylesheet" href="/wet-boew4b/css/ie8-wet-boew.min.css" /&gt;
+          <br /> &lt;script src="/wet-boew4b/js/ie8-wet-boew.min.js">&lt;&#47;script&gt;
+          <br /> &lt;![endif]--&gt;
           <br />
-          <br /> &lt;noscript><link rel="stylesheet" href="/wet-boew4b/css/noscript.min.css" />&lt;&#47;noscript>
-          <br /> &lt; script src="//assets.adobedtm.com/caacec67651710193d2331efef325107c23a0145/satelliteLib-c2082deaf69c358c641c5eb20f94b615dd606662.js">&lt;&#47;script>
+          <br /> &lt;noscript&gt;<link rel="stylesheet" href="/wet-boew4b/css/noscript.min.css" />&lt;&#47;noscript&gt;
+          <br /> &lt; script src="//assets.adobedtm.com/caacec67651710193d2331efef325107c23a0145/satelliteLib-c2082deaf69c358c641c5eb20f94b615dd606662.js"&gt;&lt;&#47;script&gt;
           <br />
-          <br /> &lt;script>dataLayer1 = [];&lt;&#47;script>
+          <br /> &lt;script&gt;dataLayer1 = [];&lt;&#47;script&gt;
           <br />
-          <br /> &lt;!-- CustomScriptsCSSEnd -->
-          <br /> &lt;&#47;head>
+          <br /> &lt;!-- CustomScriptsCSSEnd --&gt;
+          <br /> &lt;&#47;head&gt;
       
       
       </form>
